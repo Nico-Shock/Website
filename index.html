@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Web Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1c1f2e 0%, #2a1f3a 100%);
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .app-container {
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(20px);
+            background: rgba(25, 25, 40, 0.6);
+            border-radius: 0;
+            box-shadow: none;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .tab-bar {
+            background: rgba(18, 18, 30, 0.7);
+            backdrop-filter: blur(30px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0;
+            display: flex;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .tab {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.75);
+            padding: 18px 25px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-align: center;
+        }
+
+        .tab:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.08);
+            transform: none;
+        }
+
+        .tab.active {
+            color: white;
+            background: rgba(187, 134, 252, 0.2);
+            border-bottom: 3px solid #bb86fc; /* Feste Strichdicke */
+            box-shadow: 0 2px 6px rgba(187, 134, 252, 0.4);
+            transform: none;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .content-area {
+            flex: 1;
+            background: rgba(25, 25, 40, 0.4);
+            position: relative;
+            overflow: hidden;
+            border-radius: 0;
+        }
+
+        .tab-content {
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            padding: 40px;
+            animation: contentFadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1); /* Sanfter Blenden-Übergang (500ms) */
+            color: white;
+            overflow-y: auto;
+            align-items: center;
+            text-align: center;
+        }
+
+        .tab-content.active {
+            display: flex;
+        }
+
+        @keyframes contentFadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .content-icon {
+            font-size: 70px;
+            margin-bottom: 20px;
+            opacity: 0.7;
+            animation: float 2.5s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+
+        .content-title {
+            font-size: 30px;
+            font-weight: 500;
+            margin-bottom: 15px;
+            color: white;
+            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .content-description {
+            font-size: 17px;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 600px;
+            line-height: 1.5;
+            margin: 0 auto;
+        }
+
+        .category-container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            margin-top: 35px;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .category {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(8px);
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+            text-align: left;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .category:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            transform: translateY(-2px);
+        }
+
+        .category-title {
+            font-size: 22px;
+            font-weight: 500;
+            color: white;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .category-icon {
+            font-size: 24px;
+        }
+
+        .item-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .item {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(3px);
+            border-radius: 5px;
+            padding: 15px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: default;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .item:hover {
+            transform: none;
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.07);
+            box-shadow: none;
+        }
+
+        .item.clickable {
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Sanfterer Übergang für Hover */
+        }
+
+        .item.clickable:hover {
+            transform: translateY(-5px) scale(1.02); /* Deutlicherer "Lift" Effekt */
+            background: rgba(187, 134, 252, 0.1); /* Lila-Akzent für Hover */
+            border-color: rgba(187, 134, 252, 0.3); /* Akzent-Randfarbe */
+            box-shadow: 0 6px 15px rgba(187, 134, 252, 0.3); /* Angepasster Schatten für "heben" */
+        }
+
+        .item-title {
+            font-size: 15px;
+            font-weight: 500;
+            color: white;
+            margin-bottom: 3px;
+        }
+
+        .item-description {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.4;
+        }
+
+        .empty-category {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-style: italic;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+        }
+
+        .feature-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 25px;
+            gap: 15px;
+            max-width: 900px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(8px);
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            cursor: default;
+            position: relative;
+            overflow: hidden;
+            min-width: 180px;
+            flex: 1 1 220px;
+            text-align: left;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .feature-card:hover {
+            transform: none;
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .card-icon {
+            font-size: 36px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .card-title {
+            font-size: 17px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: white;
+        }
+
+        .card-description {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.4;
+        }
+
+        .welcome-special {
+            background: rgba(187, 134, 252, 0.1);
+            border-color: rgba(187, 134, 252, 0.2);
+        }
+
+        .linux-category {
+            background: rgba(144, 104, 255, 0.1);
+            border-color: rgba(144, 104, 255, 0.2);
+        }
+
+        .hoi4-category {
+            background: rgba(255, 152, 0, 0.1);
+            border-color: rgba(255, 152, 0, 0.2);
+        }
+
+        .general-category {
+            background: rgba(0, 188, 212, 0.1);
+            border-color: rgba(0, 188, 212, 0.2);
+        }
+
+        .windows-category {
+            background: rgba(33, 150, 243, 0.1);
+            border-color: rgba(33, 150, 243, 0.2);
+        }
+
+        .other-category {
+            background: rgba(255, 87, 34, 0.1);
+            border-color: rgba(255, 87, 34, 0.2);
+        }
+
+        .discord-special {
+            background: rgba(114, 137, 218, 0.1);
+            border-color: rgba(114, 137, 218, 0.2);
+        }
+
+        .external-link {
+            display: inline-block;
+            background: linear-gradient(45deg, #bb86fc, #8258b6);
+            color: white;
+            padding: 10px 18px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 13px;
+            margin-top: 15px;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            cursor: default;
+        }
+
+        .external-link:hover {
+            transform: none;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(45deg, #bb86fc, #8258b6);
+        }
+
+        .back-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            z-index: 10;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        #ip-display {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: rgba(255, 255, 255, 0.9);
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 0;
+            }
+
+            .app-container {
+                border-radius: 0;
+                width: 100vw;
+                height: 100vh;
+                margin: 0;
+                box-shadow: none;
+            }
+
+            .tab-bar {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .tab {
+                flex: 1 1 50%;
+                min-width: 120px;
+                padding: 12px 10px;
+                font-size: 12px;
+            }
+
+            .content-title {
+                font-size: 22px;
+            }
+
+            .content-description {
+                font-size: 15px;
+            }
+
+            .content-icon {
+                font-size: 50px;
+            }
+
+            .feature-cards {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .feature-card {
+                width: 100%;
+                max-width: 280px;
+            }
+
+            .tab-content {
+                padding: 15px;
+            }
+
+            .category-container {
+                gap: 15px;
+                margin-top: 20px;
+            }
+
+            .back-button {
+                top: 10px;
+                left: 10px;
+                padding: 8px 12px;
+                font-size: 11px;
+            }
+            #ip-display {
+                bottom: 5px;
+                left: 5px;
+                font-size: 10px;
+                padding: 5px 10px;
+                border-radius: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <nav class="tab-bar">
+            <button class="tab active" data-tab="welcome">Welcome</button>
+            <button class="tab" data-tab="getstarted">Get Started</button>
+            <button class="tab" data-tab="guides">Guides</button>
+            <button class="tab" data-tab="programs">My Programs</button>
+            <button class="tab" data-tab="discord">Discord</button>
+        </nav>
+        
+        <main class="content-area">
+            <div class="tab-content active" id="welcome">
+                <div class="content-icon">🌟</div>
+                <h1 class="content-title">Welcome</h1>
+                <p class="content-description">
+                    Entdecke eine Welt voller Möglichkeiten. Diese moderne Plattform bietet dir
+                    Zugang zu innovativen Tools, hilfreichen Anleitungen und einer lebendigen Community.
+                </p>
+                <div class="feature-cards">
+                    <div class="feature-card welcome-special">
+                        <span class="card-icon">🚀</span>
+                        <h3 class="card-title">Schnellstart</h3>
+                        <p class="card-description">Starte sofort mit unseren intuitiven Tools</p>
+                    </div>
+                    <div class="feature-card welcome-special">
+                        <span class="card-icon">💡</span>
+                        <h3 class="card-title">Innovation</h3>
+                        <p class="card-description">Modernste Technologien für beste Ergebnisse</p>
+                    </div>
+                    <div class="feature-card welcome-special">
+                        <span class="card-icon">🎯</span>
+                        <h3 class="card-title">Zielorientiert</h3>
+                        <p class="card-description">Effiziente Lösungen für deine Anforderungen</p>
+                    </div>
+                </div>
+                <p class="content-description" style="margin-top: 30px; font-size: 14px; opacity: 0.6;">
+                    Disclaimer: Diese Webseite wurde mit Hilfe von KI-Vorlagen erstellt.
+                </p>
+            </div>
+
+            <div class="tab-content" id="getstarted">
+                <div class="content-icon">🎯</div>
+                <h1 class="content-title">Erste Schritte</h1>
+                <p class="content-description">
+                    Hier findest du alle nötigen Informationen, um loszulegen.
+                    Folge unseren Schritt-für-Schritt-Anleitungen für einen reibungslosen Start.
+                </p>
+                <div class="feature-cards">
+                    <div class="feature-card">
+                        <span class="card-icon">📋</span>
+                        <h3 class="card-title">Einrichtungs-Guide</h3>
+                        <p class="card-description">Erste Schritte zur Einrichtung</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="card-icon">⚡</span>
+                        <h3 class="card-title">Schnellstart</h3>
+                        <p class="card-description">In 5 Minuten startklar</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="guides">
+                <div class="content-icon">📚</div>
+                <h1 class="content-title">Anleitungen</h1>
+                <p class="content-description">
+                    Umfassende Anleitungen und Tutorials für alle Funktionen.
+                    Von den Grundlagen bis zu fortgeschrittenen Techniken – hier findest du alles.
+                </p>
+                
+                <div class="category-container">
+                    <div class="category linux-category">
+                        <h2 class="category-title">
+                            <span class="category-icon">🐧</span>
+                            Linux
+                        </h2>
+                        <div class="item-list">
+                            <div class="item">
+                                <div class="item-title">Mein Fedora 42 Workspace Setup</div>
+                                <div class="item-description">Komplette Anleitung zum Einrichten einer produktiven Fedora 42 Arbeitsumgebung</div>
+                            </div>
+                            <div class="item">
+                                <div class="item-title">Mein Arch Workspace Setup</div>
+                                <div class="item-description">Schritt-für-Schritt-Einrichtung für eine optimale Arch Linux Arbeitsumgebung</div>
+                            </div>
+                            <div class="item">
+                                <div class="item-title">Arch Linux GPU PCI Passthrough zu KVM</div>
+                                <div class="item-description">Detaillierte Anleitung für GPU Passthrough in virtuellen Maschinen</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="category hoi4-category">
+                        <h2 class="category-title">
+                            <span class="category-icon">⚔️</span>
+                            Hearts of Iron IV
+                        </h2>
+                        <div class="empty-category">
+                            Noch keine Anleitungen verfügbar. Schau bald wieder vorbei!
+                        </div>
+                    </div>
+
+                    <div class="category general-category">
+                        <h2 class="category-title">
+                            <span class="category-icon">🔧</span>
+                            Allgemein
+                        </h2>
+                        <div class="empty-category">
+                            Noch keine Anleitungen verfügbar. Schau bald wieder vorbei!
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="programs">
+                <div class="content-icon">⚙️</div>
+                <h1 class="content-title">Meine Programme</h1>
+                <p class="content-description">
+                    Verwalte deine Programme und Projekte an einem zentralen Ort.
+                    Organisiere, überwache und optimiere deine Workflows.
+                </p>
+                
+                <div class="category-container">
+                    <div class="category windows-category">
+                        <h2 class="category-title">
+                            <span class="category-icon">🪟</span>
+                            Windows
+                        </h2>
+                        <div class="item-list">
+                            <div class="item">
+                                <div class="item-title">Grey NX Pack</div>
+                                <div class="item-description">Umfassendes Tool-Paket für Nintendo Switch Entwicklung und Modding</div>
+                            </div>
+                            <div class="item">
+                                <div class="item-title">3DS Nitro Pack</div>
+                                <div class="item-description">Spezialisierte Tools für Nintendo 3DS Homebrew und Entwicklung</div>
+                            </div>
+                            <div class="item clickable" onclick="showWindowsToolPack()">
+                                <div class="item-title">Windows Tool Pack</div>
+                                <div class="item-description">Sammlung nützlicher Windows-Dienstprogramme und Optimierungstools</div>
+                            </div>
+                            <div class="item">
+                                <div class="item-title">IP Configurator WebUI</div>
+                                <div class="item-description">Eine Web-basierte Oberfläche für IP Konfigurationen</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="category linux-category">
+                        <h2 class="category-title">
+                            <span class="category-icon">🐧</span>
+                            Linux
+                        </h2>
+                        <div class="item-list">
+                            <div class="item clickable" onclick="showQemuGUI()">
+                                <div class="item-title">Nicos Qemu GUI</div>
+                                <div class="item-description">Benutzerfreundliche grafische Oberfläche für QEMU-Virtualisierung</div>
+                            </div>
+                            <div class="item">
+                                <div class="item-title">Arch Helper Script</div>
+                                <div class="item-description">Automatisiertes Setup-Skript für Arch Linux Installation und Konfiguration</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="category other-category">
+                        <h2 class="category-title">
+                            <span class="category-icon">📦</span>
+                            Andere (nicht von mir)
+                        </h2>
+                        <div class="item-list">
+                            <div class="item">
+                                <div class="item-title">Talon</div>
+                                <div class="item-description">Windows-Deployment-Programm für automatisierte Software-Installation</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="discord">
+                <div class="content-icon">💬</div>
+                <h1 class="content-title">Discord</h1>
+                <p class="content-description">
+                    Trete unserer lebendigen Community bei! Verbinde dich mit anderen,
+                    stelle Fragen und bleibe über die neuesten Nachrichten auf dem Laufenden.
+                </p>
+                <div class="feature-cards">
+                    <div class="feature-card discord-special">
+                        <span class="card-icon">👥</span>
+                        <h3 class="card-title">Community</h3>
+                        <p class="card-description">Verbinde dich mit Gleichgesinnten</p>
+                    </div>
+                    <div class="feature-card discord-special">
+                        <span class="card-icon">💬</span>
+                        <h3 class="card-title">Support</h3>
+                        <p class="card-description">Erhalte Hilfe von der Community</p>
+                    </div>
+                    <div class="feature-card discord-special">
+                        <span class="card-icon">📢</span>
+                        <h3 class="card-title">Updates</div>
+                        <p class="card-description">Neueste Informationen</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="windows-tool-pack">
+                <button onclick="goBackToPrograms()" class="back-button">← Zurück</button>
+                <div style="text-align: center; padding-top: 80px;">
+                    <div class="content-icon">🛠️</div>
+                    <h1 class="content-title">Windows Tool Pack</h1>
+                    <p class="content-description" style="margin-bottom: 30px;">
+                        Für detaillierte Informationen zum Windows Tool Pack.
+                    </p>
+                    <span class="external-link">
+                        Auf GitHub ansehen →
+                    </span>
+                </div>
+            </div>
+
+            <div class="tab-content" id="qemu-gui">
+                <button onclick="goBackToPrograms()" class="back-button">← Zurück</button>
+                <div style="text-align: center; padding-top: 80px;">
+                    <div class="content-icon">🖥️</div>
+                    <h1 class="content-title">Nicos Qemu GUI</h1>
+                    <p class="content-description" style="margin-bottom: 30px;">
+                        Eine benutzerfreundliche grafische Oberfläche für QEMU-Virtualisierung. Für vollständige Dokumentation und Installationsanweisungen.
+                    </p>
+                    <span class="external-link">
+                        Auf GitHub ansehen →
+                    </span>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="ip-display">
+        IP: Lade...
+    </div>
+
+    <script>
+        let currentTab = 'welcome';
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            function showTab(targetTab) {
+                currentTab = targetTab;
+                
+                tabs.forEach(tab => tab.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+
+                const clickedTab = document.querySelector(`[data-tab="${targetTab}"]`);
+                const targetContent = document.getElementById(targetTab);
+
+                if (clickedTab && targetContent) {
+                    clickedTab.classList.add('active');
+                    targetContent.classList.add('active');
+                    targetContent.scrollTop = 0;
+                }
+            }
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const targetTab = this.getAttribute('data-tab');
+                    showTab(targetTab);
+                });
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key >= '1' && e.key <= '5') {
+                    const tabIndex = parseInt(e.key) - 1;
+                    const targetTab = tabs[tabIndex];
+                    if (targetTab) {
+                        const tabName = targetTab.getAttribute('data-tab');
+                        showTab(tabName);
+                    }
+                }
+            });
+
+            fetch('https://api.ipify.org?format=json')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('ip-display').textContent = `IP: ${data.ip}`;
+                })
+                .catch(error => {
+                    console.error('Fehler beim Abrufen der IP-Adresse:', error);
+                    document.getElementById('ip-display').textContent = "IP: Fehler";
+                });
+        });
+
+        function loadExternalPage(filename) {
+            window.location.href = filename;
+        }
+
+        function openExternalLink(url) {
+            window.open(url, '_blank');
+        }
+
+        function showWindowsToolPack() {
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById('windows-tool-pack').classList.add('active');
+        }
+
+        function showQemuGUI() {
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById('qemu-gui').classList.add('active');
+        }
+
+        function goBackToPrograms() {
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById('programs').classList.add('active');
+            
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelector('[data-tab="programs"]').classList.add('active');
+            currentTab = 'programs';
+        }
+    </script>
+</body>
+</html>
