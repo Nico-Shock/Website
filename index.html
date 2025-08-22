@@ -61,29 +61,19 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
             text-align: center;
+            border-bottom: 2px solid transparent;
         }
 
         .tab:hover {
             color: white;
             background: rgba(255, 255, 255, 0.08);
-            transform: none;
         }
 
         .tab.active {
             color: white;
             background: rgba(187, 134, 252, 0.2);
+            border-bottom: 2px solid #bb86fc;
             box-shadow: 0 2px 6px rgba(187, 134, 252, 0.4);
-            transform: none;
-        }
-        
-        .tab.active::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background-color: #bb86fc;
         }
 
         .content-area {
@@ -112,12 +102,8 @@
         }
 
         @keyframes contentFadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .content-icon {
@@ -210,18 +196,16 @@
         }
 
         .item:hover {
-            transform: none;
             background: rgba(255, 255, 255, 0.04);
             border-color: rgba(255, 255, 255, 0.07);
-            box-shadow: none;
         }
 
-        .item.clickable {
+        .item.hover-effect {
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
-        .item.clickable:hover {
+        .item.hover-effect:hover {
             transform: translateY(-5px) scale(1.02);
             background: rgba(187, 134, 252, 0.1);
             border-color: rgba(187, 134, 252, 0.3);
@@ -277,10 +261,8 @@
         }
 
         .feature-card:hover {
-            transform: none;
             background: rgba(255, 255, 255, 0.08);
             border-color: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
 
         .card-icon {
@@ -353,7 +335,6 @@
         }
 
         .external-link:hover {
-            transform: none;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
             background: linear-gradient(45deg, #bb86fc, #8258b6);
         }
@@ -395,6 +376,15 @@
             z-index: 1000;
             backdrop-filter: blur(5px);
             opacity: 0.9;
+        }
+
+        .disclaimer {
+            margin-top: 30px;
+            font-size: 14px;
+            opacity: 0.6;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 600px;
+            line-height: 1.5;
         }
 
         @media (max-width: 768px) {
@@ -504,8 +494,9 @@
                         <p class="card-description">Effiziente Lösungen für deine Anforderungen</p>
                     </div>
                 </div>
-                <p class="content-description" style="margin-top: 30px; font-size: 14px; opacity: 0.6;">
-                    Disclaimer: Diese Webseite wurde mit Hilfe von KI-Vorlagen erstellt.
+                <p class="disclaimer">
+                    Hinweis: Diese Webseite und deren Inhalte sind großteils temporär und KI-generiert.
+                    Sie dienen als Platzhalter für zukünftige Inhalte.
                 </p>
             </div>
 
@@ -528,6 +519,10 @@
                         <p class="card-description">In 5 Minuten startklar</p>
                     </div>
                 </div>
+                <p class="disclaimer">
+                    Hinweis: Diese Webseite und deren Inhalte sind großteils temporär und KI-generiert.
+                    Sie dienen als Platzhalter für zukünftige Inhalte.
+                </p>
             </div>
 
             <div class="tab-content" id="guides">
@@ -545,15 +540,15 @@
                             Linux
                         </h2>
                         <div class="item-list">
-                            <div class="item">
+                            <div class="item hover-effect">
                                 <div class="item-title">Mein Fedora 42 Workspace Setup</div>
                                 <div class="item-description">Komplette Anleitung zum Einrichten einer produktiven Fedora 42 Arbeitsumgebung</div>
                             </div>
-                            <div class="item">
+                            <div class="item hover-effect">
                                 <div class="item-title">Mein Arch Workspace Setup</div>
                                 <div class="item-description">Schritt-für-Schritt-Einrichtung für eine optimale Arch Linux Arbeitsumgebung</div>
                             </div>
-                            <div class="item">
+                            <div class="item hover-effect">
                                 <div class="item-title">Arch Linux GPU PCI Passthrough zu KVM</div>
                                 <div class="item-description">Detaillierte Anleitung für GPU Passthrough in virtuellen Maschinen</div>
                             </div>
@@ -580,6 +575,10 @@
                         </div>
                     </div>
                 </div>
+                <p class="disclaimer">
+                    Hinweis: Diese Webseite und deren Inhalte sind großteils temporär und KI-generiert.
+                    Sie dienen als Platzhalter für zukünftige Inhalte.
+                </p>
             </div>
 
             <div class="tab-content" id="programs">
@@ -597,19 +596,19 @@
                             Windows
                         </h2>
                         <div class="item-list">
-                            <div class="item">
+                            <div class="item hover-effect">
                                 <div class="item-title">Grey NX Pack</div>
                                 <div class="item-description">Umfassendes Tool-Paket für Nintendo Switch Entwicklung und Modding</div>
                             </div>
-                            <div class="item">
+                            <div class="item hover-effect">
                                 <div class="item-title">3DS Nitro Pack</div>
                                 <div class="item-description">Spezialisierte Tools für Nintendo 3DS Homebrew und Entwicklung</div>
                             </div>
-                            <div class="item clickable" onclick="showWindowsToolPack()">
+                            <div class="item hover-effect">
                                 <div class="item-title">Windows Tool Pack</div>
                                 <div class="item-description">Sammlung nützlicher Windows-Dienstprogramme und Optimierungstools</div>
                             </div>
-                            <div class="item">
+                            <div class="item hover-effect">
                                 <div class="item-title">IP Configurator WebUI</div>
                                 <div class="item-description">Eine Web-basierte Oberfläche für IP Konfigurationen</div>
                             </div>
@@ -622,11 +621,11 @@
                             Linux
                         </h2>
                         <div class="item-list">
-                            <div class="item clickable" onclick="showQemuGUI()">
+                            <div class="item hover-effect">
                                 <div class="item-title">Nicos Qemu GUI</div>
                                 <div class="item-description">Benutzerfreundliche grafische Oberfläche für QEMU-Virtualisierung</div>
                             </div>
-                            <div class="item">
+                            <div class="item hover-effect">
                                 <div class="item-title">Arch Helper Script</div>
                                 <div class="item-description">Automatisiertes Setup-Skript für Arch Linux Installation und Konfiguration</div>
                             </div>
@@ -639,13 +638,17 @@
                             Andere (nicht von mir)
                         </h2>
                         <div class="item-list">
-                            <div class="item">
+                            <div class="item hover-effect">
                                 <div class="item-title">Talon</div>
                                 <div class="item-description">Windows-Deployment-Programm für automatisierte Software-Installation</div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <p class="disclaimer">
+                    Hinweis: Diese Webseite und deren Inhalte sind großteils temporär und KI-generiert.
+                    Sie dienen als Platzhalter für zukünftige Inhalte.
+                </p>
             </div>
 
             <div class="tab-content" id="discord">
@@ -668,38 +671,14 @@
                     </div>
                     <div class="feature-card discord-special">
                         <span class="card-icon">📢</span>
-                        <h3 class="card-title">Updates</div>
+                        <h3 class="card-title">Updates</h3>
                         <p class="card-description">Neueste Informationen</p>
                     </div>
                 </div>
-            </div>
-
-            <div class="tab-content" id="windows-tool-pack">
-                <button onclick="goBackToPrograms()" class="back-button">← Zurück</button>
-                <div style="text-align: center; padding-top: 80px;">
-                    <div class="content-icon">🛠️</div>
-                    <h1 class="content-title">Windows Tool Pack</h1>
-                    <p class="content-description" style="margin-bottom: 30px;">
-                        Für detaillierte Informationen zum Windows Tool Pack.
-                    </p>
-                    <span class="external-link">
-                        Auf GitHub ansehen →
-                    </span>
-                </div>
-            </div>
-
-            <div class="tab-content" id="qemu-gui">
-                <button onclick="goBackToPrograms()" class="back-button">← Zurück</button>
-                <div style="text-align: center; padding-top: 80px;">
-                    <div class="content-icon">🖥️</div>
-                    <h1 class="content-title">Nicos Qemu GUI</h1>
-                    <p class="content-description" style="margin-bottom: 30px;">
-                        Eine benutzerfreundliche grafische Oberfläche für QEMU-Virtualisierung. Für vollständige Dokumentation und Installationsanweisungen.
-                    </p>
-                    <span class="external-link">
-                        Auf GitHub ansehen →
-                    </span>
-                </div>
+                <p class="disclaimer">
+                    Hinweis: Diese Webseite und deren Inhalte sind großteils temporär und KI-generiert.
+                    Sie dienen als Platzhalter für zukünftige Inhalte.
+                </p>
             </div>
         </main>
     </div>
@@ -759,39 +738,6 @@
                     document.getElementById('ip-display').textContent = "IP: Fehler";
                 });
         });
-
-        function loadExternalPage(filename) {
-            window.location.href = filename;
-        }
-
-        function openExternalLink(url) {
-            window.open(url, '_blank');
-        }
-
-        function showWindowsToolPack() {
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
-            });
-            document.getElementById('windows-tool-pack').classList.add('active');
-        }
-
-        function showQemuGUI() {
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
-            });
-            document.getElementById('qemu-gui').classList.add('active');
-        }
-
-        function goBackToPrograms() {
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
-            });
-            document.getElementById('programs').classList.add('active');
-            
-            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
-            document.querySelector('[data-tab="programs"]').classList.add('active');
-            currentTab = 'programs';
-        }
     </script>
 </body>
 </html>
