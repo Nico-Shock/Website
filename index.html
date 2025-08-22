@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -72,10 +72,18 @@
         .tab.active {
             color: white;
             background: rgba(187, 134, 252, 0.2);
-            border-bottom: 3px solid #bb86fc; /* Feste Strichdicke */
             box-shadow: 0 2px 6px rgba(187, 134, 252, 0.4);
             transform: none;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #bb86fc;
         }
 
         .content-area {
@@ -92,7 +100,7 @@
             display: none;
             flex-direction: column;
             padding: 40px;
-            animation: contentFadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1); /* Sanfter Blenden-Übergang (500ms) */
+            animation: contentFadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             color: white;
             overflow-y: auto;
             align-items: center;
@@ -210,14 +218,14 @@
 
         .item.clickable {
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Sanfterer Übergang für Hover */
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         .item.clickable:hover {
-            transform: translateY(-5px) scale(1.02); /* Deutlicherer "Lift" Effekt */
-            background: rgba(187, 134, 252, 0.1); /* Lila-Akzent für Hover */
-            border-color: rgba(187, 134, 252, 0.3); /* Akzent-Randfarbe */
-            box-shadow: 0 6px 15px rgba(187, 134, 252, 0.3); /* Angepasster Schatten für "heben" */
+            transform: translateY(-5px) scale(1.02);
+            background: rgba(187, 134, 252, 0.1);
+            border-color: rgba(187, 134, 252, 0.3);
+            box-shadow: 0 6px 15px rgba(187, 134, 252, 0.3);
         }
 
         .item-title {
@@ -464,17 +472,17 @@
 <body>
     <div class="app-container">
         <nav class="tab-bar">
-            <button class="tab active" data-tab="welcome">Welcome</button>
-            <button class="tab" data-tab="getstarted">Get Started</button>
-            <button class="tab" data-tab="guides">Guides</button>
-            <button class="tab" data-tab="programs">My Programs</button>
+            <button class="tab active" data-tab="welcome">Willkommen</button>
+            <button class="tab" data-tab="getstarted">Erste Schritte</button>
+            <button class="tab" data-tab="guides">Anleitungen</button>
+            <button class="tab" data-tab="programs">Meine Programme</button>
             <button class="tab" data-tab="discord">Discord</button>
         </nav>
         
         <main class="content-area">
             <div class="tab-content active" id="welcome">
                 <div class="content-icon">🌟</div>
-                <h1 class="content-title">Welcome</h1>
+                <h1 class="content-title">Willkommen</h1>
                 <p class="content-description">
                     Entdecke eine Welt voller Möglichkeiten. Diese moderne Plattform bietet dir
                     Zugang zu innovativen Tools, hilfreichen Anleitungen und einer lebendigen Community.
